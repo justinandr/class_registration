@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from random import randint, choice as rc
+from datetime import time
 
 from faker import Faker
 
@@ -16,7 +17,7 @@ def create_students():
     students = []
 
     for s in range(20):
-        student = Student(fake.name(), randint(1, 4), fake.job())
+        student = Student(name = fake.name(), year = randint(1, 4), major = fake.job())
         students.append(student)
     
     return students
@@ -26,11 +27,11 @@ def create_classes():
 
     for c in range(20):
         cl = Class(
-            fake.job(), 
-            fake.street_address(),
-            rc(days),
-            fake.time(),
-            fake.time() 
+            name = fake.job(), 
+            location = fake.street_address(),
+            days = rc(days),
+            start_time = time(9),
+            end_time = time(12) 
             )
         classes.append(cl)
     return classes
@@ -39,7 +40,7 @@ def create_registrations():
     registrations = []
 
     for r in range(20):
-        registration = Registration(rc(terms), r + 1, randint(1, 20))
+        registration = Registration(term = rc(terms), student_id = r + 1, class_id = randint(1, 20))
         registrations.append(registration)
 
     return registrations
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     with app.app_context():
         print("Clearing db...")
         Student.query.delete()
-        Class.query.delte()
+        Class.query.delete()
         Registration.query.delete()
 
         print('Seeding students...')
