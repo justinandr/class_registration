@@ -4,11 +4,11 @@ from flask import request, make_response
 from flask_restful import Resource
 
 from config import app, db, api
-from models import Student, Class, Registration
+from models import Student, Course, Registration
 
 class Home(Resource):
     def get(self):
-        return '<h1>Class Registration</h1>'
+        return '<h1>Course Registration</h1>'
     
 class Students(Resource):
     def get(self):

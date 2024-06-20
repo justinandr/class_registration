@@ -6,7 +6,7 @@ from datetime import time
 from faker import Faker
 
 from app import app
-from models import db, Student, Class, Registration
+from models import db, Student, Course, Registration
 
 fake = Faker()
 
@@ -22,25 +22,25 @@ def create_students():
     
     return students
 
-def create_classes():
-    classes = []
+def create_courses():
+    courses = []
 
     for c in range(20):
-        cl = Class(
+        cl = Course(
             name = fake.job(), 
             location = fake.street_address(),
             days = rc(days),
             start_time = time(9),
             end_time = time(12) 
             )
-        classes.append(cl)
-    return classes
+        courses.append(cl)
+    return courses
 
 def create_registrations():
     registrations = []
 
     for r in range(20):
-        registration = Registration(term = rc(terms), student_id = r + 1, class_id = randint(1, 20))
+        registration = Registration(term = rc(terms), student_id = r + 1, course_id = randint(1, 20))
         registrations.append(registration)
 
     return registrations
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     with app.app_context():
         print("Clearing db...")
         Student.query.delete()
-        Class.query.delete()
+        Course.query.delete()
         Registration.query.delete()
 
         print('Seeding students...')
@@ -58,9 +58,9 @@ if __name__ == '__main__':
         db.session.add_all(students)
         db.session.commit()
 
-        print('Seeding classes...')
-        cl = create_classes()
-        db.session.add_all(cl)
+        print('Seeding courses...')
+        courses = create_courses()
+        db.session.add_all(courses)
         db.session.commit()
         
         print('Seeding registrations...')
