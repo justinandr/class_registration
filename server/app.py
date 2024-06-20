@@ -1,21 +1,44 @@
 #!/usr/bin/env python3
 
-# Standard library imports
-
-# Remote library imports
-from flask import request
+from flask import request, make_response
 from flask_restful import Resource
 
-# Local imports
 from config import app, db, api
-# Add your model imports
 from models import Student, Class, Registration
 
-# Views go here!
+class Home(Resource):
+    def get(self):
+        return '<h1>Class Registration</h1>'
+    
+class Students(Resource):
+    def get(self):
+        students = Student.query.all()
 
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
+        if students:
+            students_response = [student.to_dict() for student in students]
+            return students_response, 200
+        
+        return {"error": "404 Not Found"}, 404
+    
+    def post(self):
+        data = request.get_json()
+
+        try:
+            new_student = Student(
+                name = data['name'],
+                year = data['year'],
+                major = data['major']
+            )
+
+            db.session.add(new_student)
+            db.session.commit()
+
+            return make_response(new_student.to_dict(), 200)
+        except ValueError as ve:
+            return {"error": f"{ve}"}, 400
+
+api.add_resource(Home, '/')
+api.add_resource(Students, '/students')
 
 
 if __name__ == '__main__':
