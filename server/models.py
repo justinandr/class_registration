@@ -9,7 +9,7 @@ from config import db
 class Student(db.Model, SerializerMixin):
     __tablename__ = 'students'
 
-    serialize_rules = ('-registrations.cyclist', '-courses.cyclists')
+    serialize_rules = ('-registrations.students', '-courses.students')
 
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String, nullable = False)
@@ -44,6 +44,8 @@ class Course(db.Model, SerializerMixin):
     
 class Registration(db.Model, SerializerMixin):
     __tablename__ = 'regristrations'
+
+    serialize_rules = ('-student.registrations', '-courses.registrations')
 
     id = db.Column(db.Integer, primary_key = True)
     #Term must be user submittable
