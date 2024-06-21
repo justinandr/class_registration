@@ -154,6 +154,41 @@ class Registrations(Resource):
         db.session.commit()
 
         return new_registration.to_dict(), 201
+    
+class RegistrationsById(Resource):
+    def get(self, id):
+        registration = Registration.query.filter_by(id = id).first()
+
+        if registration:
+            return registration.to_dict(), 200
+        
+        return {"error": "404 Not Found"}, 404
+    
+    def patch(self, id):
+        registration = Registration.query.filter_by(id = id).first()
+        data = request.get_json()
+
+        if registration:
+            for attr in data:
+                setattr(registration, attr, data[attr])
+
+            db.session.add(registration)
+            db.session.commit()
+
+            return registration.to_dict(), 200
+        
+        return {"error": "404 Not Found"}, 404
+    
+    def delete(self, id):
+        registration = Registration.query.filter_by(id = id).first()
+
+        if registration:
+            db.session.delete(registration)
+            db.session.commit()
+
+            return '', 204
+        
+        return {"error": "404 Not Found"}, 404
 
 api.add_resource(Home, '/')
 api.add_resource(Students, '/students')
@@ -161,6 +196,7 @@ api.add_resource(StudentById, '/students/<int:id>')
 api.add_resource(Courses, '/courses')
 api.add_resource(CourseById, '/courses/<int:id>')
 api.add_resource(Registrations, '/registrations')
+api.add_resource(RegistrationsById, '/registrations/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
