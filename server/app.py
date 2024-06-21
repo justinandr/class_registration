@@ -129,12 +129,38 @@ class CourseById(Resource):
             return make_response('', 204)
         
         return {"error": "404 Not Found"}, 404
+    
+class Registrations(Resource):
+    def get(self):
+        registrations = Registration.query.all()
+
+        if registrations:
+            registrations_response = [registration.to_dict() for registration in registrations]
+
+            return registrations_response, 200
+        
+        return {"error": "404 Not Found"}
+    
+    def post(self):
+        data = request.get_json()
+
+        new_registration = Registration(
+            term = data['term'],
+            student_id = data['student_id'],
+            course_id = data['course_id']
+        )
+
+        db.session.add(new_registration)
+        db.session.commit()
+
+        return new_registration.to_dict(), 201
 
 api.add_resource(Home, '/')
 api.add_resource(Students, '/students')
 api.add_resource(StudentById, '/students/<int:id>')
 api.add_resource(Courses, '/courses')
 api.add_resource(CourseById, '/courses/<int:id>')
+api.add_resource(Registrations, '/registrations')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
