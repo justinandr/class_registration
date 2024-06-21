@@ -30,7 +30,7 @@ function App() {
         <>
             <NavBar />
             <h1>Course Registration</h1>
-            <Outlet context={(students, setStudents, courses, setCourses, registrations, setRegistrations)} />
+            <Outlet context={[students, setStudents, courses, setCourses, registrations, setRegistrations]} />
         </>
     )
 
