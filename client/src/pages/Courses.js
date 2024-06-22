@@ -1,5 +1,8 @@
+import { useOutletContext } from "react-router-dom"
+
 function Courses(){
-    return <h1>Courses Page</h1>
+
+    const [courses, setCourses] = useOutletContext()
 
 }
 
