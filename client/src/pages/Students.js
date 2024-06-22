@@ -6,7 +6,7 @@ import { useState } from "react"
 function Students(){
 
     const [showAddStudentForm, setShowAddStudentForm] = useState(false)
-    const [students, setStudents] = useOutletContext()
+    const {students, setStudents} = useOutletContext()
 
     function postNewStudent(studentObj){
         fetch('/students', {
@@ -24,7 +24,7 @@ function Students(){
 
     return (
         <>
-            <div className="student_card_container">
+            <div className="student-card-container">
             <h1>Students</h1>
             <button onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add a Student</button>
             {showAddStudentForm ? <AddStudentForm postNewStudent={postNewStudent}/> : null}
