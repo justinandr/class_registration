@@ -26,6 +26,7 @@ function App() {
         .then(data => setRegistrations(data))
     }, [])
 
+
     return (
         <>
             <NavBar />
