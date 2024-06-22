@@ -7,6 +7,7 @@ function Students(){
 
     return (
         <>
+            <div className="student_card_container">
             <h1>Students</h1>
             {students.map(student => {
                 return <StudentCard 
@@ -15,6 +16,7 @@ function Students(){
 
                 />
             })}
+            </div>
         </>
     )
 }

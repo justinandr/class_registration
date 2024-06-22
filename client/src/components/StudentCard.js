@@ -1,13 +1,13 @@
-import { useOutletContext } from "react-router-dom"
+import { useState } from "react"
 
 function StudentCard({student}){
+
     return (
-        <div>
+        <div className="student_card">
             <h2>{student.name}</h2>
             <p>Year: {student.year}</p>
             <p>Major: {student.major}</p>
             <button>Show More</button>
-            <button>Edit</button>
         </div>
     )
 }
