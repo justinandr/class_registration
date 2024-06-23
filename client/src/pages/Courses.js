@@ -30,6 +30,7 @@ function Courses(){
                         key = {course.id}
                         course = {course} 
                         handleDeleteCourse = {handleDeleteCourse}
+                        handlePatchCourse = {handlePatchCourse}
                     />
                 })}
             </div>

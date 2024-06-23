@@ -36,20 +36,20 @@ function AddStudentForm({postNewStudent}){
         >
             {({errors}) => (
                 <Form>
-                <label htmlFor='name'>Name</label>
-                <Field name='name' type='text' />
-                {errors.name ? <p>{errors.name}</p> : null}
+                    <label htmlFor='name'>Name</label>
+                    <Field name='name' type='text' />
+                    {errors.name ? <p>{errors.name}</p> : null}
 
-                <label htmlFor='year'>Year</label>
-                <Field name='year' type='number' />
-                {errors.year ? <p>{errors.year}</p> : null}
+                    <label htmlFor='year'>Year</label>
+                    <Field name='year' type='number' />
+                    {errors.year ? <p>{errors.year}</p> : null}
 
-                <label htmlFor='major'>Major</label>
-                <Field name='major' type='text' />
-                {errors.year ? <p>{errors.year}</p> : null}
+                    <label htmlFor='major'>Major</label>
+                    <Field name='major' type='text' />
+                    {errors.year ? <p>{errors.year}</p> : null}
 
-                <button type='submit'>Submit</button>
-            </Form>
+                    <button type='submit'>Submit</button>
+                </Form>
             )}
         </Formik>
     )
