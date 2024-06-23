@@ -6,6 +6,19 @@ function Courses(){
 
     const [showAddCourseForm, setShowAddCourseForm] = useState(false)
     const {courses, setCourses} = useOutletContext()
+
+    function handleDeleteCourse(course){
+        fetch(`/courses/${course.id}`, {
+            method: 'DELETE'
+        })
+        .then(() => setCourses((courses) => 
+            courses.filter((filterCourse) => filterCourse.id !== course.id)
+        ))
+    }
+
+    function handlePatchCourse(course){
+
+    }
     
     return (
         <>
@@ -16,6 +29,7 @@ function Courses(){
                     return <CourseCard
                         key = {course.id}
                         course = {course} 
+                        handleDeleteCourse = {handleDeleteCourse}
                     />
                 })}
             </div>
