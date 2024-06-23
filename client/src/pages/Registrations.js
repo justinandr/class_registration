@@ -34,9 +34,10 @@ function Registrations(){
                 students={students}
                 postNewRegistration={postNewRegistration}/> 
                 : null}
-            {registrations.map(registration => {
+            {courses.map(course => {
                 return <RegistrationCard
-                    key={registration.id} 
+                    key={course.id}
+                    course={course}
                     />
             })}
         </>

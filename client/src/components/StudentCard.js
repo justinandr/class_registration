@@ -7,7 +7,7 @@ function StudentCard({student}){
     const courses = student.registrations.map(reg => reg.courses.name)
 
     return (
-        <div className="student-card">
+        <div className="card">
             <h2>{student.name}</h2>
             <p>Year: {student.year}</p>
             <p>Major: {student.major}</p>

@@ -5,3 +5,16 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.card-container{
+    justify-content: center;
+}

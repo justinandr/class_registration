@@ -24,7 +24,7 @@ function Students(){
 
     return (
         <>
-            <div className="student-card-container">
+            <div className="card-container">
             <h1>Students</h1>
             <button onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add a Student</button>
             {showAddStudentForm ? <AddStudentForm postNewStudent={postNewStudent}/> : null}

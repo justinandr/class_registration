@@ -2,24 +2,20 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 
 const RegistrationSchema = Yup.object().shape({
-    student: Yup.string().required('Student is required'),
-    course: Yup.string().required('Course is required'),
+    student_id: Yup.string().required('Student is required'),
+    course_id: Yup.string().required('Course is required'),
     term: Yup.string().required('Term is required')
 })
-
-// Needs students, courses, registrations
 
 function RegistrationForm({students, courses, postNewRegistration}){
 
     function handleSubmit(values){
-        console.log('am i getting here?')
         const registrationObj = {
             id: '',
             term: values.term,
             student_id: values.student_id,
             course_id: values.course_id
         }
-        console.log(registrationObj)
         postNewRegistration(registrationObj)
     }
 
@@ -85,7 +81,7 @@ function RegistrationForm({students, courses, postNewRegistration}){
                         {courseOptions}
                     </Field>
                     {errors.course_id ? <p>{errors.course_id}</p> : null}
-
+                    
                     <button type='submit'>Submit</button>
                 </Form>
             )}
