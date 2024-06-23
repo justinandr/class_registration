@@ -20,6 +20,7 @@ function CourseCard({course, handleDeleteCourse, handlePatchCourse}){
             <button onClick={() => setShowMoreInfo(!showMoreInfo)}>{showMoreInfo ? 'Hide Information' : 'More Information'}</button>
             <button onClick={() => setShowEditCourseForm(!showEditCourseForm)}>Edit Course</button>
             <button onClick={() => handleDeleteCourse(course)}>Delete Course</button>
+            {showEditCourseForm ? <EditCourseForm handlePatchCourse={handlePatchCourse} course={course} /> : null}
         </div>
     )
 }

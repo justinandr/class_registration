@@ -16,8 +16,23 @@ function Courses(){
         ))
     }
 
-    function handlePatchCourse(course){
-
+    function handlePatchCourse(courseObj, course){
+        fetch(`/courses/${course.id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(courseObj)
+        })
+        .then(res => res.json())
+        .then(data => setCourses(courses.map(course => {
+            if (course.id !== data.id) {
+                return course
+            }
+            else {
+                return data
+            }
+        })))
     }
     
     return (

@@ -6,9 +6,9 @@ const EditCourseSchema = Yup.object().shape({
     name: Yup.string().required('Course name is required'),
     location: Yup.string().required('Location is required'),
     days: Yup.string().required('Days is required'),
-    start_time: Yup.string().required('Start time is required'),
+    start_time: Yup.number().required('Start time is required'),
     end_time: Yup
-        .string()
+        .number()
         .required('End time is required')
         .test('is-greater', 'End time should be greater', function(value){
             const { start_time } = this.parent
@@ -16,7 +16,7 @@ const EditCourseSchema = Yup.object().shape({
         })
 })
 
-function EditCourseForm({handlePatchCourse}){
+function EditCourseForm({handlePatchCourse, course}){
     
     function handleSubmit(values) {
         const courseObj = {
@@ -27,13 +27,11 @@ function EditCourseForm({handlePatchCourse}){
             start_time: values.start_time,
             end_time: values.end_time
         }
+        console.log(values.start_time)
+        console.log(values.end_time)
 
-        handlePatchCourse(courseObj)
+        handlePatchCourse(courseObj, course)
     }
-
-    const dayOptions = ['Monday, Wednesday, Friday', 'Tuesday, Thursday']
-    const timeOptions = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00',
-                        '15:00', '16:00', '17:00', '18:00']
 
     return (
         <Formik
@@ -69,6 +67,8 @@ function EditCourseForm({handlePatchCourse}){
                         placeholder='Days'
                     >
                         <option defaultValue value={-1}>Select days</option>
+                        <option value={'Monday, Wednesday, Friday'}>Monday, Wednesday, Friday</option>
+                        <option value={'Tuesday, Thursday'}>Tuesday, Thursday</option>
                     </Field>
                     {errors.days ? <p>{errors.days}</p> : null}
 
@@ -79,6 +79,16 @@ function EditCourseForm({handlePatchCourse}){
                         placeholder='Start Time'
                     >
                         <option defaultValue value={-1}>Select start time</option>
+                        <option value={'9'}>09:00</option>
+                        <option value={'10'}>10:00</option>
+                        <option value={'11'}>11:00</option>
+                        <option value={'12'}>12:00</option>
+                        <option value={'13'}>13:00</option>
+                        <option value={'14'}>14:00</option>
+                        <option value={'15'}>15:00</option>
+                        <option value={'16'}>16:00</option>
+                        <option value={'17'}>17:00</option>
+                        <option value={'18'}>18:00</option>
                     </Field>
                     {errors.start_time ? <p>{errors.start_time}</p> : null}
 
@@ -89,8 +99,20 @@ function EditCourseForm({handlePatchCourse}){
                         placeholder='End Time'
                     >
                         <option defaultValue value={-1}>Select end time</option>
+                        <option value={'09'}>09:00</option>
+                        <option value={'10'}>10:00</option>
+                        <option value={'11'}>11:00</option>
+                        <option value={'12'}>12:00</option>
+                        <option value={'13'}>13:00</option>
+                        <option value={'14'}>14:00</option>
+                        <option value={'15'}>15:00</option>
+                        <option value={'16'}>16:00</option>
+                        <option value={'17'}>17:00</option>
+                        <option value={'18'}>18:00</option>
                     </Field>
                     {errors.end_time ? <p>{errors.end_time}</p> : null}
+
+                    <button type='submit' >Submit</button>
                 </Form>
 
             )}

@@ -2,6 +2,7 @@
 
 from flask import request, make_response
 from flask_restful import Resource
+from datetime import time
 
 from config import app, db, api
 from models import Student, Course, Registration
@@ -110,6 +111,11 @@ class CourseById(Resource):
         if course:
 
             for attr in data:
+                if attr == 'start_time':
+                    setattr(course, attr, time(int(data[attr])))
+                elif attr == 'end_time':
+                    setattr(course, attr, time(int(data[attr])))
+                    
                 setattr(course, attr, data[attr])
 
             db.session.add(course)
