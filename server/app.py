@@ -115,8 +115,8 @@ class CourseById(Resource):
                     setattr(course, attr, time(int(data[attr])))
                 elif attr == 'end_time':
                     setattr(course, attr, time(int(data[attr])))
-                    
-                setattr(course, attr, data[attr])
+                else:
+                    setattr(course, attr, data[attr])
 
             db.session.add(course)
             db.session.commit()

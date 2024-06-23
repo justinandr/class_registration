@@ -20,7 +20,6 @@ function EditCourseForm({handlePatchCourse, course}){
     
     function handleSubmit(values) {
         const courseObj = {
-            id: '',
             name: values.name,
             location: values.location,
             days: values.days,
