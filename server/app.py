@@ -69,6 +69,18 @@ class StudentById(Resource):
         
         return {"error": "404 Not Found"}, 404
     
+class StudentsByCourseId(Resource):
+    def get(self, id):
+        course = Course.query.filter_by(id = id).first()
+        students = [student.to_dict(only = ('name', 'id')) for student in course.students]
+
+        if course:
+            if students:
+                return students, 200
+            return [], 200
+        
+        return {"error": "404 Not Found"}
+    
 class Courses(Resource):
     def get(self):
         courses = Course.query.all()
@@ -199,6 +211,7 @@ class RegistrationsById(Resource):
 api.add_resource(Home, '/')
 api.add_resource(Students, '/students')
 api.add_resource(StudentById, '/students/<int:id>')
+api.add_resource(StudentsByCourseId, '/courses/<int:id>/students')
 api.add_resource(Courses, '/courses')
 api.add_resource(CourseById, '/courses/<int:id>')
 api.add_resource(Registrations, '/registrations')

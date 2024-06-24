@@ -10,7 +10,7 @@ const RegistrationSchema = Yup.object().shape({
 
 function RegistrationForm(){
 
-    const {courses, setCourses, students} = useOutletContext()
+    const {registrations, setRegistrations, students, courses} = useOutletContext()
 
     function postNewRegistration(registrationObj){
         fetch('/registrations', {
@@ -21,7 +21,7 @@ function RegistrationForm(){
             body: JSON.stringify(registrationObj)
         })
         .then(res => res.json())
-        .then(data => setCourses([...courses, data]))
+        .then(data => setRegistrations([...registrations, data]))
     }
 
     function handleSubmit(values){

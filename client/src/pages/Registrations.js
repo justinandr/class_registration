@@ -6,21 +6,15 @@ import RegistrationCard from '../components/RegistrationCard'
 function Registrations(){
 
     const [showRegForm, setShowRegForm] = useState(false)
-    const {registrations, 
-            setRegistrations,
-            students,
-            setStudents,
-            courses,
-            setCourses} = useOutletContext()
+    const {courses, registrations, setRegistrations} = useOutletContext()
 
     return (
         <div className='container'>
             <h2>Registrations</h2>
             <button onClick={() => setShowRegForm(!showRegForm)}>{showRegForm ? 'Hide Registration Form' : 'Create New Registration'}</button>
             {showRegForm ? <RegistrationForm 
-                courses={courses}
-                students={students}
-                setCourses={setCourses}
+                registrations={registrations}
+                setRegistrations={setRegistrations}
                 /> 
                 : null}
             <div className='card-container'>
