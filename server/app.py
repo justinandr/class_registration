@@ -86,8 +86,8 @@ class Courses(Resource):
             name = data['name'],
             location = data['location'],
             days = data['days'],
-            start_time = data['start_time'],
-            end_time = data['end_time']
+            start_time = time(int(data['start_time'])),
+            end_time = time(int(data['end_time']))
         )
 
         db.session.add(new_course)

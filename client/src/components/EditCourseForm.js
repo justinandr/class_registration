@@ -26,8 +26,6 @@ function EditCourseForm({handlePatchCourse, course}){
             start_time: values.start_time,
             end_time: values.end_time
         }
-        console.log(values.start_time)
-        console.log(values.end_time)
 
         handlePatchCourse(courseObj, course)
     }

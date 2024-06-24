@@ -1,11 +1,24 @@
 import { useOutletContext } from "react-router-dom"
 import CourseCard from "../components/CourseCard"
 import { useState } from "react"
+import AddCourseForm from "../components/AddCourseForm"
 
 function Courses(){
 
     const [showAddCourseForm, setShowAddCourseForm] = useState(false)
     const {courses, setCourses} = useOutletContext()
+
+    function handlePostCourse(courseObj){
+        fetch('/courses', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(courseObj)
+        })
+        .then(res => res.json())
+        .then(data => setCourses([...courses, data]))
+    }
 
     function handleDeleteCourse(course){
         fetch(`/courses/${course.id}`, {
@@ -40,15 +53,18 @@ function Courses(){
             <div className="container">
                 <h1>Courses</h1>
                 <button onClick={() => setShowAddCourseForm(!showAddCourseForm)}>Add a Course</button>
+                <div className="form-container">
+                    {showAddCourseForm ? <AddCourseForm handlePostCourse={handlePostCourse}/> : null}
+                </div>
                 <div className="card-container">
-                {courses.map(course => {
-                    return <CourseCard
-                        key = {course.id}
-                        course = {course} 
-                        handleDeleteCourse = {handleDeleteCourse}
-                        handlePatchCourse = {handlePatchCourse}
-                    />
-                })}
+                    {courses.map(course => {
+                        return <CourseCard
+                            key = {course.id}
+                            course = {course} 
+                            handleDeleteCourse = {handleDeleteCourse}
+                            handlePatchCourse = {handlePatchCourse}
+                        />
+                    })}
                 </div>
             </div>
         </>
