@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 
 const AddStudentSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    year: Yup.number().required('Year is required'),
+    year: Yup.number().positive().required('Year is required'),
     major: Yup.string()
 })
 

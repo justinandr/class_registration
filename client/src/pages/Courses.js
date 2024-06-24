@@ -53,9 +53,7 @@ function Courses(){
             <div className="container">
                 <h1>Courses</h1>
                 <button onClick={() => setShowAddCourseForm(!showAddCourseForm)}>Add a Course</button>
-                <div className="form-container">
                     {showAddCourseForm ? <AddCourseForm handlePostCourse={handlePostCourse}/> : null}
-                </div>
                 <div className="card-container">
                     {courses.map(course => {
                         return <CourseCard

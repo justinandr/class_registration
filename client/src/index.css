@@ -71,7 +71,7 @@ a{
     border-radius: 8px;
 }
 
-input[type=text], select {
+input[type=text], input[type=number], select {
     font-family: Arial, sans-serif;
     width: 100%;
     padding: 12px 20px;
