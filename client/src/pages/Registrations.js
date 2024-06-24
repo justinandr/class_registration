@@ -13,34 +13,25 @@ function Registrations(){
             courses,
             setCourses} = useOutletContext()
 
-    function postNewRegistration(registrationObj){
-        fetch('/registrations', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(registrationObj)
-        })
-        .then(res => res.json())
-        .then(data => setCourses([...courses, data]))
-    }
-
     return (
-        <>
-            <h1>Registrations</h1>
+        <div className='container'>
+            <h2>Registrations</h2>
             <button onClick={() => setShowRegForm(!showRegForm)}>{showRegForm ? 'Hide Registration Form' : 'Create New Registration'}</button>
             {showRegForm ? <RegistrationForm 
                 courses={courses}
                 students={students}
-                postNewRegistration={postNewRegistration}/> 
+                setCourses={setCourses}
+                /> 
                 : null}
+            <div className='card-container'>
             {courses.map(course => {
                 return <RegistrationCard
                     key={course.id}
                     course={course}
                     />
             })}
-        </>
+            </div>
+        </div>
     )
 }
 

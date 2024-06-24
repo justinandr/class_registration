@@ -8,11 +8,13 @@ function StudentCard({student}){
 
     return (
         <div className="card">
-            <h2>{student.name}</h2>
-            <p>Year: {student.year}</p>
-            <p>Major: {student.major}</p>
-            {showDetails ? <p>{courses}</p> : null}
-            <button onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'Hide Courses' : 'Show Courses'}</button>
+            <div className="card-content">
+                <h3>{student.name}</h3>
+                <p>Year: {student.year}</p>
+                <p>Major: {student.major}</p>
+                {showDetails ? <p>{courses}</p> : null}
+                <button onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'Hide Courses' : 'Show Courses'}</button>
+            </div>
         </div>
     )
 }

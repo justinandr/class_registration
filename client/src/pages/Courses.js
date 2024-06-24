@@ -37,9 +37,10 @@ function Courses(){
     
     return (
         <>
-            <div className="card-container">
+            <div className="container">
                 <h1>Courses</h1>
                 <button onClick={() => setShowAddCourseForm(!showAddCourseForm)}>Add a Course</button>
+                <div className="card-container">
                 {courses.map(course => {
                     return <CourseCard
                         key = {course.id}
@@ -48,6 +49,7 @@ function Courses(){
                         handlePatchCourse = {handlePatchCourse}
                     />
                 })}
+                </div>
             </div>
         </>
     )

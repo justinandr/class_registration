@@ -1,4 +1,5 @@
 import { Formik, Field, Form } from 'formik'
+import { useOutletContext } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const RegistrationSchema = Yup.object().shape({
@@ -7,7 +8,21 @@ const RegistrationSchema = Yup.object().shape({
     term: Yup.string().required('Term is required')
 })
 
-function RegistrationForm({students, courses, postNewRegistration}){
+function RegistrationForm(){
+
+    const {courses, setCourses, students} = useOutletContext()
+
+    function postNewRegistration(registrationObj){
+        fetch('/registrations', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(registrationObj)
+        })
+        .then(res => res.json())
+        .then(data => setCourses([...courses, data]))
+    }
 
     function handleSubmit(values){
         const registrationObj = {

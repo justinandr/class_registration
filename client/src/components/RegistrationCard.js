@@ -6,7 +6,7 @@ function RegistrationCard({course}) {
 
     return (
         <div className="card">
-            <h2>{course.name}</h2>
+            <h3>{course.name}</h3>
             <p>Days: {course.days}</p>
             <p>Time: {course.start_time} - {course.end_time}</p>
             {showStudents ? course.registrations.length === 0 ? 

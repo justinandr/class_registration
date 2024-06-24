@@ -23,11 +23,11 @@ function Students(){
     }
 
     return (
-        <>
-            <div className="card-container">
+        <div className="container">
             <h1>Students</h1>
             <button onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add a Student</button>
             {showAddStudentForm ? <AddStudentForm postNewStudent={postNewStudent}/> : null}
+            <div className="card-container">
             {students.map(student => {
                 return <StudentCard 
                     key = {student.id}
@@ -35,7 +35,7 @@ function Students(){
                 />
             })}
             </div>
-        </>
+        </div>
     )
 }
 

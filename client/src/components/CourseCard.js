@@ -8,8 +8,9 @@ function CourseCard({course, handleDeleteCourse, handlePatchCourse}){
 
 
     return (
-        <div className="student-card">
-            <h2>{course.name}</h2>
+        <div className="card">
+            <div className="card-content">
+            <h3>{course.name}</h3>
             <p>Location: {course.location}</p>
             {showMoreInfo ? 
                 <>
@@ -21,6 +22,7 @@ function CourseCard({course, handleDeleteCourse, handlePatchCourse}){
             <button onClick={() => setShowEditCourseForm(!showEditCourseForm)}>Edit Course</button>
             <button onClick={() => handleDeleteCourse(course)}>Delete Course</button>
             {showEditCourseForm ? <EditCourseForm handlePatchCourse={handlePatchCourse} course={course} /> : null}
+            </div>
         </div>
     )
 }
