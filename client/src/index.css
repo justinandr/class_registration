@@ -23,6 +23,20 @@ h3{
     font-size: xx-large;
 }
 
+p{
+    margin: auto;
+    vertical-align: center;
+}
+
+.home-h1{
+    padding-top: 10%;
+}
+
+.home-p{
+    padding-top: 5%;
+    font-family: Arial, sans-serif;
+}
+
 button{
     text-align: center;
     width: 40%;

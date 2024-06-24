@@ -12,6 +12,7 @@ fake = Faker()
 
 days = ['Monday, Wednesday, Friday', 'Tuesday, Thursday']
 terms = ['Fall', 'Spring']
+course_suffix = ['101', '201', '301', '401', '501']
 
 def create_students():
     students = []
@@ -27,7 +28,7 @@ def create_courses():
 
     for c in range(20):
         cl = Course(
-            name = fake.job(), 
+            name = f'{fake.job()} {rc(course_suffix)}', 
             location = fake.street_address(),
             days = rc(days),
             start_time = time(9),

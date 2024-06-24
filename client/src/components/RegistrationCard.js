@@ -15,6 +15,7 @@ function RegistrationCard({course}) {
 
     return (
         <div className="card">
+            <div className="card-content">
             <h3>{course.name}</h3>
             <p>Days: {course.days}</p>
             <p>Time: {course.start_time} - {course.end_time}</p>
@@ -26,6 +27,7 @@ function RegistrationCard({course}) {
             <button onClick={() => setShowStudents(!showStudents)}>
                 {showStudents ? 'Hide Enrolled Students' : 'Show Enrolled Students'}
             </button>
+            </div>
         </div>
     )
 
