@@ -1,10 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-function StudentCard({student}){
+function StudentCard({student, registrations}){
 
     const [showDetails, setShowDetails] = useState(false)
+    const [courses, setCourses] = useState([])
 
-    const courses = student.registrations.map(reg => reg.courses.name)
+    useEffect(() => {
+        fetch(`/students/${student.id}`)
+        .then(res => res.json())
+        .then((data) => {
+            const c = data.registrations.map(reg => reg.courses.name)
+            setCourses(c)
+        })
+    }, [registrations])
 
     return (
         <div className="card">

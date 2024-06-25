@@ -6,7 +6,7 @@ import { useState } from "react"
 function Students(){
 
     const [showAddStudentForm, setShowAddStudentForm] = useState(false)
-    const {students, setStudents} = useOutletContext()
+    const {students, setStudents, registrations} = useOutletContext()
 
     function postNewStudent(studentObj){
         fetch('/students', {
@@ -32,6 +32,7 @@ function Students(){
                 return <StudentCard 
                     key = {student.id}
                     student = {student}
+                    registrations={registrations}
                 />
             })}
             </div>
