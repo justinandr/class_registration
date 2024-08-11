@@ -12,7 +12,7 @@ function StudentCard({student, registrations}){
             const c = data.registrations.map(reg => reg.courses.name)
             setCourses(c)
         })
-    }, [registrations, student.id])
+    }, [registrations])
 
     return (
         <div className="card">
