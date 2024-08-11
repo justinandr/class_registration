@@ -1,6 +1,5 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from datetime import datetime
 
 from config import db
 
@@ -43,7 +42,7 @@ class Course(db.Model, SerializerMixin):
 class Registration(db.Model, SerializerMixin):
     __tablename__ = 'regristrations'
 
-    serialize_rules = ('-student.registrations', '-courses.registrations')
+    serialize_rules = ('-students.registrations', '-courses.registrations')
 
     id = db.Column(db.Integer, primary_key = True)
     #Term must be user submittable

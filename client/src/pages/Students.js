@@ -22,9 +22,16 @@ function Students(){
         })
     }
 
+    
+
+    function logFallStudents(){
+
+    }
+
     return (
         <div className="container">
             <h1>Students</h1>
+            <button >Fall</button>
             <button onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add a Student</button>
             {showAddStudentForm ? <AddStudentForm postNewStudent={postNewStudent}/> : null}
             <div className="card-container">
