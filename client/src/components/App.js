@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 function App() {
 
     const [students, setStudents] = useState([])
@@ -27,10 +36,11 @@ function App() {
     }, [])
 
     return (
-        <>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
             <NavBar />
             <Outlet context={{students, setStudents, courses, setCourses, registrations, setRegistrations}} />
-        </>
+        </ThemeProvider>
     )
 
 }

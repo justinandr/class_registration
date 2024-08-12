@@ -1,29 +1,26 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { Card, CardContent, Typography, Button, CardActions, CardActionArea } from "@mui/material"
 
 function StudentCard({student, registrations}){
 
     const [showDetails, setShowDetails] = useState(false)
-    const [courses, setCourses] = useState([])
 
-    useEffect(() => {
-        fetch(`/students/${student.id}`)
-        .then(res => res.json())
-        .then((data) => {
-            const c = data.registrations.map(reg => reg.courses.name)
-            setCourses(c)
-        })
-    }, [registrations])
+    const courses = student.registrations.map(reg => reg.courses.name)
 
     return (
-        <div className="card">
-            <div className="card-content">
-                <h3>{student.name}</h3>
-                <p>Year: {student.year}</p>
-                <p>Major: {student.major}</p>
-                {showDetails ? <p>{courses}</p> : null}
-                <button onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'Hide Courses' : 'Show Courses'}</button>
-            </div>
-        </div>
+        <Card sx={{minWidth: 275}}>
+          <CardActionArea>
+            <CardContent>
+                <Typography gutterBottom variant="h5">{student.name}</Typography>
+                <Typography variant="subtitle1">Major: {student.major}</Typography>
+                <Typography variant="subtitle1">Year: {student.year}</Typography>
+                {showDetails ? <Typography variant="subtitle1">{courses}</Typography> : null}
+                <CardActions>
+                  <Button fullWidth onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'Hide Courses' : 'Show Courses'}</Button>
+                </CardActions>
+            </CardContent>
+          </CardActionArea>
+        </Card>
     )
 }
 

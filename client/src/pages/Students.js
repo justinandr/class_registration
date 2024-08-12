@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom"
 import StudentCard from "../components/StudentCard"
 import AddStudentForm from "../components/AddStudentForm"
 import { useState } from "react"
+import { Typography, Button, Grid } from "@mui/material"
 
 function Students(){
 
@@ -22,28 +23,33 @@ function Students(){
         })
     }
 
-    
-
-    function logFallStudents(){
-
-    }
-
     return (
-        <div className="container">
-            <h1>Students</h1>
-            <button >Fall</button>
-            <button onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add a Student</button>
-            {showAddStudentForm ? <AddStudentForm postNewStudent={postNewStudent}/> : null}
-            <div className="card-container">
+        <Grid container alignItems={'center'} rowSpacing={1} columnSpacing={{ xs: 3, sm: 2, md: 3 }}>
+          <Grid item xs={12}>
+            <Typography variant="h1">Students</Typography>
+          </Grid>
+          <Grid item xs={12} textAlign={'center'}>
+            <Button variant="text" onClick={() => setShowAddStudentForm(!showAddStudentForm)}>Add Student ➕</Button>
+          </Grid>
+            {showAddStudentForm ? 
+            <Grid item xs={12}>
+              <AddStudentForm postNewStudent={postNewStudent}/> 
+            </Grid>
+            : null}
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 3, sm: 2, md: 3 }}>
             {students.map(student => {
-                return <StudentCard 
-                    key = {student.id}
-                    student = {student}
-                    registrations={registrations}
-                />
+                return (
+                  <Grid item textAlign={'center'} xs={4} key={student.id}>
+                    <StudentCard 
+                        key = {student.id}
+                        student = {student}
+                        registrations={registrations}
+                    />
+                  </Grid>
+                )
             })}
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 

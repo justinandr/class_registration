@@ -45,7 +45,6 @@ class Registration(db.Model, SerializerMixin):
     serialize_rules = ('-students.registrations', '-courses.registrations')
 
     id = db.Column(db.Integer, primary_key = True)
-    #Term must be user submittable
     term = db.Column(db.String, nullable = False)
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable = False)
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable = False)

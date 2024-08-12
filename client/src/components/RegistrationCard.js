@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react"
-import { useOutletContext } from "react-router-dom"
+import { useState } from "react"
 
 function RegistrationCard({course}) {
 
-    const [showStudents, setShowStudents] = useState(false) 
-    const [studentsToDisplay, setStudentsToDisplay] = useState([])
-    const {registrations} = useOutletContext()
+    const [showStudents, setShowStudents] = useState(false)
 
-    useEffect(() => {
-        fetch(`/courses/${course.id}/students`)
-        .then(res => res.json())
-        .then(data => setStudentsToDisplay(data))
-    }, [registrations, course.id])
+    const studentsToDisplay = course.registrations.map(reg => reg.students.name)
 
     return (
         <div className="card">
@@ -22,7 +15,7 @@ function RegistrationCard({course}) {
             {showStudents ? studentsToDisplay.length === 0 ? 
                 <p>No students enrolled</p> :
                 studentsToDisplay.map(student => {
-                    return <p key={student.id}>{student.name}</p>
+                    return <p key={student}>{student}</p>
                 }) : null}
             <button onClick={() => setShowStudents(!showStudents)}>
                 {showStudents ? 'Hide Enrolled Students' : 'Show Enrolled Students'}

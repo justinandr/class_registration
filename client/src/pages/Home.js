@@ -1,13 +1,13 @@
 import React from "react"
+import { Typography, Container } from "@mui/material"
 
 function Home(){
     
     return (
-        <div className="container">
-            <h1 className="home-h1">Welcome to Course Registration</h1>
-            <p className="home-p">Use the navigation bar at the top of the page to view current students, courses and registrations. 
-            </p>
-        </div>
+        <Container maxWidth={"sm"} sx={{pt: "150px"}}>
+            <Typography gutterBottom textAlign={'left'} variant="h1">Course ✏ Registration</Typography>
+            <Typography variant="h5" textAlign={'left'}>Use the navigation bar at the top of the page to view current students, courses and registrations. </Typography>
+        </Container>
     )
 
 }
