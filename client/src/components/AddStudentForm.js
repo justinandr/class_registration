@@ -1,58 +1,88 @@
-import { Formik, Field, Form } from 'formik'
-import * as Yup from 'yup'
+import React, { useState } from 'react'
+import { Box, TextField, Button, Typography, Grid } from '@mui/material'
+import { useOutletContext } from 'react-router-dom'
 
-const AddStudentSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    year: Yup.number().positive().required('Year is required'),
-    major: Yup.string()
-})
+function AddTournamentForm() {
 
-function AddStudentForm({postNewStudent}){
+    const [name, setName] = useState('')
+    const [year, setYear] = useState('')
+    const [major, setMajor] = useState('')
+    const {students, setStudents} = useOutletContext()
 
-    function handleSubmit(values){
-        const studentObj = {
-            id: '',
-            name: values.name,
-            year: values.year,
-            major: values.major
+    function handleSubmit(event){
+        event.preventDefault()
+        const formData = {
+            name: name, 
+            year: year,
+            major: major
         }
 
-        postNewStudent(studentObj)
+        fetch('/students', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => setStudents([...students, data]))
+
+        setName('')
+        setYear('')
+        setMajor('')
     }
+
     return (
-        <Formik 
-            validateOnChange = {false}
-            validateOnBlur = {false}
-            initialValues={{
-                name: '',
-                year: '',
-                major: ''
-            }}
-            validationSchema={AddStudentSchema}
-            onSubmit={(values, props, initialValues) => {
-                handleSubmit(values)
-                props.resetForm(initialValues)
+        <Box
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'left',
             }}
         >
-            {({errors}) => (
-                <Form>
-                    <label htmlFor='name'>Name</label>
-                    <Field name='name' type='text' />
-                    {errors.name ? <p>{errors.name}</p> : null}
-
-                    <label htmlFor='year'>Year</label>
-                    <Field name='year' type='number' />
-                    {errors.year ? <p>{errors.year}</p> : null}
-
-                    <label htmlFor='major'>Major</label>
-                    <Field name='major' type='text' />
-                    {errors.year ? <p>{errors.year}</p> : null}
-
-                    <button type='submit'>Submit</button>
-                </Form>
-            )}
-        </Formik>
+            <Typography textAlign={'center'} variant='h6'>Add Student</Typography>
+            <Box
+                noValidate
+                component='form'
+                onSubmit={handleSubmit}
+                sx={{mt: '10px', display: 'flex', flexDirection: 'column'}}
+            >
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            label='Name'
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            label='Year'
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            label='Major'
+                            value={major}
+                            onChange={(e) => setMajor(e.target.value)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Box>
     )
 }
 
-export default AddStudentForm
+export default AddTournamentForm

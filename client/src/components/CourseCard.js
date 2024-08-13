@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Card, CardContent, Typography, CardActionArea } from "@mui/material"
 import EditCourseForm from "./EditCourseForm";
 
 function CourseCard({course, handleDeleteCourse, handlePatchCourse}){
@@ -8,23 +9,17 @@ function CourseCard({course, handleDeleteCourse, handlePatchCourse}){
 
 
     return (
-        <div className="card">
-            <div className="card-content">
-            <h3>{course.name}</h3>
-            <p>Location: {course.location}</p>
-            {showMoreInfo ? 
-                <>
-                <p>Days: {course.days}</p>
-                <p>Time: {course.start_time} - {course.end_time}</p>
-                </> 
-            : null}
-            <button onClick={() => setShowMoreInfo(!showMoreInfo)}>{showMoreInfo ? 'Hide Information' : 'More Information'}</button>
-            <button onClick={() => setShowEditCourseForm(!showEditCourseForm)}>Edit Course</button>
-            <button onClick={() => handleDeleteCourse(course)}>Delete Course</button>
-            {showEditCourseForm ? <EditCourseForm handlePatchCourse={handlePatchCourse} course={course} /> : null}
-            </div>
-        </div>
-    )
+      <Card sx={{minWidth: 250}}>
+        <CardActionArea onClick={() => setShowMoreInfo(!showMoreInfo)}>
+          <CardContent>
+              <Typography gutterBottom variant="h5">{course.name}</Typography>
+              <Typography variant="subtitle1">Location: {course.location}</Typography>
+              <Typography variant="subtitle1">Days: {course.days}</Typography>
+              <Typography variant="subtitle1">Time: {course.start_time} - {course.end_time}</Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+  )
 }
 
 export default CourseCard

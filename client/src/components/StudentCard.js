@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Card, CardContent, Typography, Button, CardActions, CardActionArea } from "@mui/material"
+import { Card, CardContent, Typography, CardActionArea } from "@mui/material"
 
 function StudentCard({student, registrations}){
 
@@ -8,16 +8,20 @@ function StudentCard({student, registrations}){
     const courses = student.registrations.map(reg => reg.courses.name)
 
     return (
-        <Card sx={{minWidth: 275}}>
-          <CardActionArea>
+        <Card sx={{minWidth: 250}}>
+          <CardActionArea onClick={() => setShowDetails(!showDetails)}>
             <CardContent>
                 <Typography gutterBottom variant="h5">{student.name}</Typography>
                 <Typography variant="subtitle1">Major: {student.major}</Typography>
                 <Typography variant="subtitle1">Year: {student.year}</Typography>
-                {showDetails ? <Typography variant="subtitle1">{courses}</Typography> : null}
-                <CardActions>
-                  <Button fullWidth onClick={() => setShowDetails(!showDetails)}>{showDetails ? 'Hide Courses' : 'Show Courses'}</Button>
-                </CardActions>
+                {showDetails ? 
+                  <>
+                    <Typography variant='subtitle1'>Courses:</Typography>
+                    {courses.map(course => {
+                      return <Typography key={course} variant="subtitle1">{course}</Typography>
+                    })}
+                  </>
+                : null}
             </CardContent>
           </CardActionArea>
         </Card>
