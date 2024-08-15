@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -39,7 +41,9 @@ function App() {
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />
             <NavBar />
-            <Outlet context={{students, setStudents, courses, setCourses, registrations, setRegistrations}} />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Outlet context={{students, setStudents, courses, setCourses, registrations, setRegistrations}} />
+            </LocalizationProvider>
         </ThemeProvider>
     )
 

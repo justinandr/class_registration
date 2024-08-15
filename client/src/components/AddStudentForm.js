@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Box, TextField, Button, Typography, Grid } from '@mui/material'
+import { Box, TextField, Button, Typography } from '@mui/material'
 import { useOutletContext } from 'react-router-dom'
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 
 function AddTournamentForm() {
 
@@ -33,55 +34,43 @@ function AddTournamentForm() {
     }
 
     return (
-        <Box
-            sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'left',
-            }}
-        >
-            <Typography textAlign={'center'} variant='h6'>Add Student</Typography>
             <Box
                 noValidate
                 component='form'
                 onSubmit={handleSubmit}
                 sx={{mt: '10px', display: 'flex', flexDirection: 'column'}}
             >
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            label='Name'
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            label='Year'
-                            value={year}
-                            onChange={(e) => setYear(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            label='Major'
-                            value={major}
-                            onChange={(e) => setMajor(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>
-                    </Grid>
-                </Grid>
+              <Typography textAlign={'center'} variant='h6'>Add Student</Typography>
+              <Grid2 container spacing={2}>
+                  <Grid2 xs={12} sm={12}>
+                      <TextField
+                          fullWidth
+                          label='Name'
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                      />
+                  </Grid2>
+                  <Grid2 xs={12} sm={12}>
+                      <TextField
+                          fullWidth
+                          label='Year'
+                          value={year}
+                          onChange={(e) => setYear(e.target.value)}
+                      />
+                  </Grid2>
+                  <Grid2 xs={12} sm={12}>
+                      <TextField
+                          fullWidth
+                          label='Major'
+                          value={major}
+                          onChange={(e) => setMajor(e.target.value)}
+                      />
+                  </Grid2>
+                  <Grid2 xs={12} sm={12}>
+                      <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>
+                  </Grid2>
+              </Grid2>
             </Box>
-        </Box>
     )
 }
 

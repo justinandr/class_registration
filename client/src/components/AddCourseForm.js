@@ -1,122 +1,127 @@
-import { Formik, Field, Form } from 'formik'
-import * as Yup from 'yup'
-import moment from 'moment'
+import React, { useState } from 'react'
+import { Box, TextField, Button, Typography, MenuItem, InputLabel, Select } from '@mui/material'
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
+import dayjs from 'dayjs'
+import { useOutletContext } from 'react-router-dom'
 
-const AddCourseSchema = Yup.object().shape({
-    name: Yup.string().required('Course name is required'),
-    location: Yup.string().required('Location is required'),
-    days: Yup.string().required('Days is required'),
-    start_time: Yup.number().required('Start time is required'),
-    end_time: Yup
-        .number()
-        .required('End time is required')
-        .test('is-greater', 'End time should be greater', function(value){
-            const { start_time } = this.parent
-            return moment(value, 'HH:mm').isSameOrAfter(moment(start_time, 'HH:mm'))
-        })
-})
+function AddCourseForm() {
 
-function AddCourseForm({handlePostCourse}){
+    const [name, setName] = useState('')
+    const [location, setLocation] = useState('')
+    const [days, setDays] = useState('')
+    const [daysOpen, setDaysOpen] = useState(false)
+    const [startTime, setStartTime] = useState(dayjs())
+    const [endTime, setEndTime] = useState(dayjs())
+    const {courses, setCourses} = useOutletContext()
 
-    function handleSubmit(values){
-        const courseObj = {
-            name: values.name,
-            location: values.location,
-            days: values.days,
-            start_time: values.start_time,
-            end_time: values.end_time
+    function handleDaysOpen(){
+      setDaysOpen(true)
+    }
+    
+    function handleDaysClose(){
+      setDaysOpen(false)
+    }
+
+    function handleSubmit(event){
+        event.preventDefault()
+        const formData = {
+            name: name, 
+            location: location, 
+            days: days,
+            startHour: startTime.$H,
+            startMinute: startTime.$m,
+            endHour: endTime.$H,
+            endMinute: endTime.$m
         }
 
-        handlePostCourse(courseObj)
+        fetch('/courses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => setCourses([...courses, data]))
 
+        setName('')
+        setLocation('')
+        setDays('')
+        setStartTime(dayjs())
+        setEndTime(dayjs())
     }
 
     return (
-        <Formik
-            validateOnBlur = {false}
-            validateOnChange = {false}
-            initialValues={{
-                name: '',
-                location: '',
-                days: '',
-                start_time: '',
-                end_time: ''
-            }}
-            validationSchema={AddCourseSchema}
-            onSubmit={(values, props, initialValues) => {
-                handleSubmit(values)
-                props.resetForm(initialValues)
+        <Box
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'left',
             }}
         >
-            {({errors}) => (
-                <Form>
-                    <label htmlFor='name'>Name</label>
-                    <Field name='name' type='text' />
-                    {errors.name ? <p>{errors.name}</p> : null}
-
-                    <label htmlFor='location' >Location</label>
-                    <Field name='location' type='text' />
-                    {errors.location ? <p>{errors.location}</p> : null}
-
-                    <label htmlFor='days' >Days</label>
-                    <Field 
-                        name='days' 
-                        as='select'
-                        placeholder='Days'
-                    >
-                        <option defaultValue value={-1}>Select days</option>
-                        <option value={'Monday, Wednesday, Friday'}>Monday, Wednesday, Friday</option>
-                        <option value={'Tuesday, Thursday'}>Tuesday, Thursday</option>
-                    </Field>
-                    {errors.days ? <p>{errors.days}</p> : null}
-
-                    <label htmlFor='start_time'>Start Time</label>
-                    <Field
-                        name='start_time'
-                        as='select'
-                        placeholder='Start Time'
-                    >
-                        <option defaultValue value={-1}>Select start time</option>
-                        <option value={'9'}>09:00</option>
-                        <option value={'10'}>10:00</option>
-                        <option value={'11'}>11:00</option>
-                        <option value={'12'}>12:00</option>
-                        <option value={'13'}>13:00</option>
-                        <option value={'14'}>14:00</option>
-                        <option value={'15'}>15:00</option>
-                        <option value={'16'}>16:00</option>
-                        <option value={'17'}>17:00</option>
-                        <option value={'18'}>18:00</option>
-                    </Field>
-                    {errors.start_time ? <p>{errors.start_time}</p> : null}
-
-                    <label htmlFor='end_time' >End Time</label>
-                    <Field
-                        name='end_time'
-                        as='select'
-                        placeholder='End Time'
-                    >
-                        <option defaultValue value={-1}>Select end time</option>
-                        <option value={'09'}>09:00</option>
-                        <option value={'10'}>10:00</option>
-                        <option value={'11'}>11:00</option>
-                        <option value={'12'}>12:00</option>
-                        <option value={'13'}>13:00</option>
-                        <option value={'14'}>14:00</option>
-                        <option value={'15'}>15:00</option>
-                        <option value={'16'}>16:00</option>
-                        <option value={'17'}>17:00</option>
-                        <option value={'18'}>18:00</option>
-                    </Field>
-                    {errors.end_time ? <p>{errors.end_time}</p> : null}
-
-                    <button type='submit' >Submit</button>
-                </Form>
-
-            )}
-        </Formik>
+            <Typography textAlign={'center'} variant='h6'>Add Course</Typography>
+            <Box
+                noValidate
+                component='form'
+                onSubmit={handleSubmit}
+                sx={{mt: '10px', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+            >
+                <Grid2 container spacing={2}>
+                    <Grid2 xs={12}>
+                        <TextField
+                            fullWidth
+                            label='Name'
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </Grid2>
+                    <Grid2 xs={12}>
+                        <TextField
+                            fullWidth
+                            label='Location'
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                        />
+                    </Grid2>
+                    <Grid2 xs={12}>
+                    <InputLabel id='days'>Days</InputLabel>
+                        <Select
+                            labelId='Days'
+                            fullWidth
+                            label='Days'
+                            open={daysOpen}
+                            onClose={handleDaysClose}
+                            onOpen={handleDaysOpen}
+                            value={days}
+                            onChange={(e) => setDays(e.target.value)}
+                        >
+                            <MenuItem value={'Monday, Wednesday, Friday'}>Monday, Wednesday, Friday</MenuItem>
+                            <MenuItem value={'Tuesday, Thursday'}>Tuesday, Thursday</MenuItem>
+                        </Select>
+                    </Grid2>
+                    <Grid2 xs={12}>
+                      <TimePicker fullWidth label='Start Time' 
+                        ampm={false} 
+                        value={startTime}
+                        onChange={(newValue) => setStartTime(newValue)}
+                      />
+                    </Grid2>
+                    <Grid2 xs={12}>
+                      <TimePicker label='End Time' 
+                        ampm={false} 
+                        value={endTime}
+                        onChange={(newValue) => setEndTime(newValue)}
+                      />
+                    </Grid2>
+                    <Grid2 xs={12}>
+                        <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>
+                    </Grid2>
+                </Grid2>
+            </Box>
+        </Box>
     )
-
 }
 
 export default AddCourseForm

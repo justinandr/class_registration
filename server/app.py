@@ -98,31 +98,14 @@ class Courses(Resource):
             name = data['name'],
             location = data['location'],
             days = data['days'],
-            start_time = time(int(data['start_time'])),
-            end_time = time(int(data['end_time']))
+            start_time = time(hour = data['startHour'], minute = data['startMinute']),
+            end_time = time(hour = data['endHour'], minute = data['endMinute'])
         )
 
         db.session.add(new_course)
         db.session.commit()
 
         return new_course.to_dict(), 201
-    
-class FallStudents(Resource):
-    def get(self):
-        students = Student.query.all()
-        fall_students = []
-        for student in students:
-            for registration in student.registrations:
-
-                if registration.term == 'Fall':
-                    fall_students.append(student)
-        # print(fall_students)
-        if students:
-            students_response = [student.to_dict() for student in fall_students]
-
-            return make_response(students_response, 200)
-        
-        return {"error": "404 Not Found"}, 404
     
 class CourseById(Resource):
     def get(self, id):
@@ -140,10 +123,10 @@ class CourseById(Resource):
         if course:
 
             for attr in data:
-                if attr == 'start_time':
-                    setattr(course, attr, time(int(data[attr])))
-                elif attr == 'end_time':
-                    setattr(course, attr, time(int(data[attr])))
+                if attr == 'startHour':
+                    setattr(course, attr, time(hour = data['startHour'], minute = data['startMinute']))
+                elif attr == 'endHour':
+                    setattr(course, attr, time(hour = data['endHour'], minute = data['endMinute']))
                 else:
                     setattr(course, attr, data[attr])
 
@@ -233,7 +216,6 @@ api.add_resource(Courses, '/courses')
 api.add_resource(CourseById, '/courses/<int:id>')
 api.add_resource(Registrations, '/registrations')
 api.add_resource(RegistrationsById, '/registrations/<int:id>')
-api.add_resource(FallStudents, '/students/fall')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
