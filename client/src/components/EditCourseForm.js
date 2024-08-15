@@ -14,8 +14,6 @@ function EditCourseForm({course}){
     const [startTime, setStartTime] = useState(dayjs())
     const [endTime, setEndTime] = useState(dayjs())
     const {courses, setCourses} = useOutletContext()
-
-    console.log(course)
     
     function handleSubmit(e) {
       e.preventDefault()

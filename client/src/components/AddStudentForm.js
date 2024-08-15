@@ -34,13 +34,20 @@ function AddTournamentForm() {
     }
 
     return (
-            <Box
+      <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'left',
+            }}
+        >
+              <Typography textAlign={'center'} variant='h6'>Add Student</Typography>
+              <Box
                 noValidate
                 component='form'
                 onSubmit={handleSubmit}
-                sx={{mt: '10px', display: 'flex', flexDirection: 'column'}}
+                sx={{mt: '10px', mb: '10px', alignItems:'center', display: 'flex', flexDirection: 'column'}}
             >
-              <Typography textAlign={'center'} variant='h6'>Add Student</Typography>
               <Grid2 container spacing={2}>
                   <Grid2 xs={12} sm={12}>
                       <TextField
@@ -71,6 +78,7 @@ function AddTournamentForm() {
                   </Grid2>
               </Grid2>
             </Box>
+      </Box>
     )
 }
 

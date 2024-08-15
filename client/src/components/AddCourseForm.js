@@ -55,10 +55,8 @@ function AddCourseForm() {
     return (
         <Box
             sx={{
-                marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'left',
             }}
         >
             <Typography textAlign={'center'} variant='h6'>Add Course</Typography>
@@ -66,9 +64,23 @@ function AddCourseForm() {
                 noValidate
                 component='form'
                 onSubmit={handleSubmit}
-                sx={{mt: '10px', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+                sx={{mt: '10px', mb: '10px', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
             >
                 <Grid2 container spacing={2}>
+                    <Grid2 xs={12}>
+                      <TimePicker fullWidth label='Start Time' 
+                        ampm={false} 
+                        value={startTime}
+                        onChange={(newValue) => setStartTime(newValue)}
+                      />
+                    </Grid2>
+                    <Grid2 xs={12}>
+                      <TimePicker label='End Time' 
+                        ampm={false} 
+                        value={endTime}
+                        onChange={(newValue) => setEndTime(newValue)}
+                      />
+                    </Grid2>
                     <Grid2 xs={12}>
                         <TextField
                             fullWidth
@@ -87,33 +99,19 @@ function AddCourseForm() {
                     </Grid2>
                     <Grid2 xs={12}>
                     <InputLabel id='days'>Days</InputLabel>
-                        <Select
-                            labelId='Days'
-                            fullWidth
-                            label='Days'
-                            open={daysOpen}
-                            onClose={handleDaysClose}
-                            onOpen={handleDaysOpen}
-                            value={days}
-                            onChange={(e) => setDays(e.target.value)}
-                        >
-                            <MenuItem value={'Monday, Wednesday, Friday'}>Monday, Wednesday, Friday</MenuItem>
-                            <MenuItem value={'Tuesday, Thursday'}>Tuesday, Thursday</MenuItem>
-                        </Select>
-                    </Grid2>
-                    <Grid2 xs={12}>
-                      <TimePicker fullWidth label='Start Time' 
-                        ampm={false} 
-                        value={startTime}
-                        onChange={(newValue) => setStartTime(newValue)}
-                      />
-                    </Grid2>
-                    <Grid2 xs={12}>
-                      <TimePicker label='End Time' 
-                        ampm={false} 
-                        value={endTime}
-                        onChange={(newValue) => setEndTime(newValue)}
-                      />
+                    <Select
+                        labelId='days'
+                        fullWidth
+                        label='Days'
+                        open={daysOpen}
+                        onClose={handleDaysClose}
+                        onOpen={handleDaysOpen}
+                        value={days}
+                        onChange={(e) => setDays(e.target.value)}
+                    >
+                        <MenuItem value={'Monday, Wednesday, Friday'}>Monday, Wednesday, Friday</MenuItem>
+                        <MenuItem value={'Tuesday, Thursday'}>Tuesday, Thursday</MenuItem>
+                    </Select>
                     </Grid2>
                     <Grid2 xs={12}>
                         <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>

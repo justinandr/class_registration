@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Card, CardContent, Typography, CardActionArea } from "@mui/material"
 
-function StudentCard({student, registrations}){
+function StudentCard({student}){
 
     const [showDetails, setShowDetails] = useState(false)
 

@@ -1,16 +1,41 @@
-import { Formik, Field, Form } from 'formik'
+import { useState } from 'react'
+import { Box, Button, Typography, MenuItem, Select, InputLabel } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
 import { useOutletContext } from 'react-router-dom'
-import * as Yup from 'yup'
-
-const RegistrationSchema = Yup.object().shape({
-    student_id: Yup.string().required('Student is required'),
-    course_id: Yup.string().required('Course is required'),
-    term: Yup.string().required('Term is required')
-})
 
 function RegistrationForm(){
 
+    const [term, setTerm] = useState('')
+    const [studentId, setStudentId] = useState('')
+    const [courseId, setCourseId] = useState('')
+    const [termOpen, setTermOpen] = useState(false)
+    const [studentIdOpen, setStudentIdOpen] = useState(false)
+    const [courseIdOpen, setCourseIdOpen] = useState(false)
     const {registrations, setRegistrations, students, courses} = useOutletContext()
+
+    function handleTermOpen(){
+      setTermOpen(true)
+    }
+
+    function handleTermClose(){
+      setTermOpen(false)
+    }
+
+    function handleStudentIdOpen(){
+      setStudentIdOpen(true)
+    }
+
+    function handleStudentIdClose(){
+      setStudentIdOpen(false)
+    }
+
+    function handleCourseIdOpen(){
+      setCourseIdOpen(true)
+    }
+
+    function handleCourseIdClose(){
+      setCourseIdOpen(false)
+    }
 
     function postNewRegistration(registrationObj){
         fetch('/registrations', {
@@ -24,83 +49,95 @@ function RegistrationForm(){
         .then(data => setRegistrations([...registrations, data]))
     }
 
-    function handleSubmit(values){
+    function handleSubmit(){
         const registrationObj = {
             id: '',
-            term: values.term,
-            student_id: values.student_id,
-            course_id: values.course_id
+            term: term,
+            student_id: studentId,
+            course_id: courseId
         }
         postNewRegistration(registrationObj)
     }
 
     const studentOptions = students.map(student => {
         return (
-            <option key={student.id} value={student.id}>{student.name}</option>
+            <MenuItem key={student.id} value={student.id}>{student.name}</MenuItem>
         )
     })
 
     const courseOptions = courses.map(course => {
         return (
-            <option key={course.id} value={course.id}>{course.name}</option>
+            <MenuItem key={course.id} value={course.id}>{course.name}</MenuItem>
         )
     })
 
     return (
-        <Formik
-            validateOnBlur = {false}
-            validateOnChange = {false}
-            initialValues={{
-                term: '',
-                student_id: '',
-                course_id: ''
-            }}
-            validationSchema={RegistrationSchema}
-            onSubmit={(values, props, initialValues) => {
-                handleSubmit(values)
-                props.resetForm(initialValues)
+      <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
-            {({errors}) => (
-                <Form>
-                    <label htmlFor='term'>Term</label>
-                    <Field
-                        name='term'
-                        as='select'
-                        placeholder='Term'
+            <Typography textAlign={'center'} variant='h6'>Add Registration</Typography>
+            <Box
+                noValidate
+                component='form'
+                onSubmit={handleSubmit}
+                sx={{mt: '10px', mb: '10px', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+            >
+                <Grid2 container spacing={2}>
+                  <Grid2 xs={12}>
+                    <InputLabel id='term'>Term</InputLabel>
+                    <Select
+                        labelId='term'
+                        fullWidth
+                        label='Term'
+                        open={termOpen}
+                        onClose={handleTermClose}
+                        onOpen={handleTermOpen}
+                        value={term}
+                        onChange={(e) => setTerm(e.target.value)}
                     >
-                        <option defaultValue value={-1}>Select a term</option>
-                        <option value={'Spring'}>Spring</option>
-                        <option value={'Fall'}>Fall</option>
-                    </Field>
-                    {errors.term ? <p>{errors.term}</p> : null}
-
-                    <label htmlFor='student_id'>Student</label>
-                    <Field
-                        name='student_id'
-                        as='select'
-                        placeholder='Student'
+                        <MenuItem value={'Spring'}>Spring</MenuItem>
+                        <MenuItem value={'Fall'}>Fall</MenuItem>
+                    </Select>
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <InputLabel id='student'>Student</InputLabel>
+                    <Select
+                        labelId='student'
+                        fullWidth
+                        label='Student'
+                        open={studentIdOpen}
+                        onClose={handleStudentIdClose}
+                        onOpen={handleStudentIdOpen}
+                        value={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
                     >
-                        <option defaultValue value={-1}>Select a student</option>
                         {studentOptions}
-                    </Field>
-                    {errors.student_id ? <p>{errors.student_id}</p> : null}
-
-                    <label htmlFor='course_id'>Course</label>
-                    <Field
-                        name='course_id'
-                        as='select'
-                        placeholder='Course'
+                    </Select>
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <InputLabel id='course'>Course</InputLabel>
+                    <Select
+                        labelId='course'
+                        fullWidth
+                        label='Course'
+                        open={courseIdOpen}
+                        onClose={handleCourseIdClose}
+                        onOpen={handleCourseIdOpen}
+                        value={courseId}
+                        onChange={(e) => setCourseId(e.target.value)}
                     >
-                        <option defaultValue value={-1}>Select a course</option>
                         {courseOptions}
-                    </Field>
-                    {errors.course_id ? <p>{errors.course_id}</p> : null}
-                    
-                    <button type='submit'>Submit</button>
-                </Form>
-            )}
-        </Formik>
+                    </Select>
+                  </Grid2>
+                    <Grid2 xs={12}>
+                        <Button fullWidth type='submit' variant='contained' sx={{mb: '5px'}}>Submit</Button>
+                    </Grid2>
+                </Grid2>
+            </Box>
+        </Box>
     )
 
 }
