@@ -32,7 +32,7 @@ pipenv shell
 
 While in the server directory, run ```python app.py``` to start the server.
 
-## React App
+## Client
 
 Navigate to the client directory and run ```npm start``` to compile the react app which will automatically open a browser window with the app running in it.
 
